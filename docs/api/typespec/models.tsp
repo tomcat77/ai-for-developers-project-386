@@ -4,10 +4,13 @@ namespace CallsCalendar {
   model EventType {
     /** Строковый id, например DEFAULT или QUICK. */
     id: string;
-
+    /* Название типа события */
     name: string;
+    /* Описание типа события */
     description: string;
     durationMinutes: int32;
+    /* Цвет типа события */
+    color: string;
   }
 
   /** Бронирование слота. */
@@ -34,10 +37,10 @@ namespace CallsCalendar {
 
   /** Создание типа события владельцем (id задаётся клиентом). */
   model CreateEventTypeRequest {
-    id: string;
     name: string;
     description: string;
     durationMinutes: int32;
+    color: string;
   }
 
   /** Создание брони гостем. */

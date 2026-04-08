@@ -1,0 +1,48 @@
+<mat-toolbar color="primary" class="header">
+  <button mat-button routerLink="/">
+    <mat-icon>calendar_today</mat-icon>
+    Calendar
+  </button>
+  <span class="spacer"></span>
+  <button mat-button [routerLink]="['/admin/calendar']">Календарь</button>
+  <button mat-button [routerLink]="['/admin/event-types']">Типы событий</button>
+</mat-toolbar>
+
+<div class="content">
+  <div class="page-header">
+    <h2>Управление типами событий</h2>
+    <button mat-raised-button color="primary" (click)="createEventType()">
+      <mat-icon>add</mat-icon>
+      Создать тип
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="event-types-list">
+    <mat-card *ngFor="let eventType of eventTypes" class="event-type-card">
+      <div class="color-indicator" [style.background-color]="eventType.color"></div>
+      <div class="card-content">
+        <mat-card-header>
+          <mat-card-title>{{ eventType.name }}</mat-card-title>
+          <mat-card-subtitle>ID: {{ eventType.id }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="description">{{ eventType.description }}</p>
+          <p class="duration">{{ eventType.durationMinutes }} мин</p>
+        </mat-card-content>
+      </div>
+      <div class="card-actions">
+        <button mat-stroked-button (click)="editEventType(eventType)">
+          Редактировать
+        </button>
+      </div>
+    </mat-card>
+  </div>
+
+  <div *ngIf="!loading && eventTypes.length === 0" class="empty-state">
+    <p>Нет типов событий. Создайте первый тип.</p>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="calendar-widget">
+  <div class="calendar-header">
+    <button mat-icon-button (click)="previousMonth()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span class="month-year">{{ getMonthYear() }}</span>
+    <button mat-icon-button (click)="nextMonth()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div class="calendar-weekdays">
+    <span>Пн</span>
+    <span>Вт</span>
+    <span>Ср</span>
+    <span>Чт</span>
+    <span>Пт</span>
+    <span>Сб</span>
+    <span>Вс</span>
+  </div>
+
+  <div class="calendar-days">
+    <button
+      *ngFor="let day of days"
+      class="day-cell"
+      [class.other-month]="!isCurrentMonth(day)"
+      [class.today]="isToday(day)"
+      [class.selected]="isSelected(day)"
+      (click)="selectDate(day)">
+      {{ getDayNumber(day) }}
+    </button>
+  </div>
+</div>

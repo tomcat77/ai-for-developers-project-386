@@ -1,0 +1,17 @@
+.calendar-slot-step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+  
+  .calendar-column {
+    min-width: 0;
+  }
+  
+  .slots-column {
+    min-width: 0;
+  }
+}

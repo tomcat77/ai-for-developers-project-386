@@ -1,0 +1,23 @@
+<div class="slot-picker">
+  <h4 class="slots-title">Доступное время</h4>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="32"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && slots.length === 0" class="no-slots">
+    <mat-icon>event_busy</mat-icon>
+    <span>Нет доступных слотов на эту дату</span>
+  </div>
+
+  <mat-selection-list *ngIf="!loading && slots.length > 0" class="slots-list">
+    <mat-list-option
+      *ngFor="let slot of slots"
+      [selected]="isSelected(slot)"
+      (click)="selectSlot(slot)"
+      class="slot-item">
+      <mat-icon matListItemIcon>schedule</mat-icon>
+      <span matListItemTitle>{{ formatTime(slot) }}</span>
+    </mat-list-option>
+  </mat-selection-list>
+</div>

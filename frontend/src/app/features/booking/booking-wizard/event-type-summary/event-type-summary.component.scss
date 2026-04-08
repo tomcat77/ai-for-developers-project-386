@@ -1,0 +1,46 @@
+.summary-card {
+  background: #fafafa;
+  margin-bottom: 24px;
+  
+  mat-card-title {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+  
+  .event-info {
+    margin-bottom: 16px;
+    
+    .info-row {
+      display: flex;
+      margin-bottom: 8px;
+      
+      .label {
+        color: #757575;
+        min-width: 100px;
+      }
+      
+      .value {
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .selected-date,
+  .selected-slot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: white;
+    border-radius: 4px;
+    margin-top: 8px;
+    
+    mat-icon {
+      color: #ff9800;
+    }
+    
+    span {
+      font-weight: 500;
+    }
+  }
+}

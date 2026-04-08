@@ -1,0 +1,41 @@
+.event-type-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 350px;
+  padding-top: 8px;
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .color-field {
+    margin-top: 16px;
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: #757575;
+      margin-bottom: 8px;
+    }
+
+    .color-picker-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .color-input {
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+      }
+
+      .color-value {
+        font-family: monospace;
+        color: #757575;
+      }
+    }
+  }
+}

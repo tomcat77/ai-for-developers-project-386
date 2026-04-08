@@ -1,0 +1,86 @@
+<mat-toolbar color="primary" class="header">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Подтверждение</span>
+</mat-toolbar>
+
+<div class="content">
+  <mat-card class="summary-card">
+    <mat-card-header>
+      <mat-card-title>Детали бронирования</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="info-row">
+        <span class="label">Событие:</span>
+        <span class="value">{{ eventType?.name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Дата:</span>
+        <span class="value">{{ formatDate() }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Время:</span>
+        <span class="value">{{ formatTime() }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Длительность:</span>
+        <span class="value">{{ eventType?.durationMinutes }} мин</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="contact-card">
+    <mat-card-header>
+      <mat-card-title>Контактные данные (необязательно)</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form">
+        <mat-checkbox formControlName="includeContact">
+          Указать контактные данные
+        </mat-checkbox>
+
+        <div *ngIf="form.get('includeContact')?.value" class="contact-fields">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="form.get('email')?.hasError('email')">
+              Введите корректный email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Телефон</mat-label>
+            <input matInput formControlName="phone" type="tel">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Заметки</mat-label>
+            <textarea matInput formControlName="notes" rows="3" maxlength="500"></textarea>
+            <mat-hint align="end">{{ form.get('notes')?.value?.length || 0 }}/500</mat-hint>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="error()" class="error-message">
+    {{ error() }}
+  </div>
+
+  <div class="actions">
+    <button mat-stroked-button (click)="goBack()">
+      Назад
+    </button>
+    <button mat-stroked-button (click)="skip()" [disabled]="submitting">
+      Пропустить
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="submit()" 
+      [disabled]="submitting || (form.get('includeContact')?.value && !form.valid)">
+      Забронировать
+    </button>
+  </div>
+</div>

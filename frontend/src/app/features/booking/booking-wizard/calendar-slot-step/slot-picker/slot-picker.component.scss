@@ -1,0 +1,47 @@
+.slot-picker {
+  .slots-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0 0 12px;
+    color: #424242;
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+  }
+  
+  .no-slots {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 0;
+    color: #757575;
+    
+    mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  .slots-list {
+    max-height: 300px;
+    overflow-y: auto;
+    
+    .slot-item {
+      border-radius: 4px;
+      margin-bottom: 4px;
+      
+      &.mat-mdc-list-option-selected {
+        background: rgba(255, 152, 0, 0.1);
+      }
+      
+      mat-icon {
+        color: #757575;
+      }
+    }
+  }
+}

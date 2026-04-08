@@ -1,0 +1,17 @@
+<div class="calendar-slot-step">
+  <div class="calendar-column">
+    <app-calendar-widget
+      [selectedDate]="selectedDate"
+      (dateSelect)="onDateSelect($event)">
+    </app-calendar-widget>
+  </div>
+
+  <div class="slots-column">
+    <app-slot-picker
+      [slots]="slots"
+      [loading]="loading"
+      [selectedSlot]="selectedSlot"
+      (slotSelect)="onSlotSelect($event)">
+    </app-slot-picker>
+  </div>
+</div>

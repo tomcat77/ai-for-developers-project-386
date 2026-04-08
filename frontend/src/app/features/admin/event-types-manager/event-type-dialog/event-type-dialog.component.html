@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="event-type-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Название</mat-label>
+      <input matInput formControlName="name" placeholder="Например: Консультация">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        Название обязательно
+      </mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('minlength')">
+        Минимум 2 символа
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Описание</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+      <mat-error *ngIf="form.get('description')?.hasError('required')">
+        Описание обязательно
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Длительность (минуты)</mat-label>
+      <input matInput formControlName="durationMinutes" type="number">
+      <mat-error *ngIf="form.get('durationMinutes')?.hasError('required')">
+        Длительность обязательна
+      </mat-error>
+      <mat-error *ngIf="form.get('durationMinutes')?.hasError('min')">
+        Минимум 1 минута
+      </mat-error>
+      <mat-error *ngIf="form.get('durationMinutes')?.hasError('max')">
+        Максимум 480 минут
+      </mat-error>
+    </mat-form-field>
+
+    <div class="color-field">
+      <label>Цвет</label>
+      <div class="color-picker-wrapper">
+        <input
+          type="color"
+          formControlName="color"
+          class="color-input">
+        <span class="color-value">{{ form.get('color')?.value }}</span>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="cancel()">Отмена</button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="save()" 
+    [disabled]="!form.valid">
+    Сохранить
+  </button>
+</mat-dialog-actions>

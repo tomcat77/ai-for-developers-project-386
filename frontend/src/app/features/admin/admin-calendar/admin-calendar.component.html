@@ -1,0 +1,62 @@
+<mat-toolbar color="primary" class="header">
+  <button mat-button routerLink="/">
+    <mat-icon>calendar_today</mat-icon>
+    Calendar
+  </button>
+  <span class="spacer"></span>
+  <button mat-button [routerLink]="['/admin/calendar']">Календарь</button>
+  <button mat-button [routerLink]="['/admin/event-types']">Типы событий</button>
+</mat-toolbar>
+
+<div class="content">
+  <div class="calendar-header">
+    <button mat-icon-button (click)="previousMonth()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span class="month-year">{{ getMonthYear() }}</span>
+    <button mat-icon-button (click)="nextMonth()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button mat-stroked-button (click)="loadData()">
+      <mat-icon>refresh</mat-icon>
+      Обновить
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="calendar-grid">
+    <div class="weekday-header">
+      <span>Пн</span>
+      <span>Вт</span>
+      <span>Ср</span>
+      <span>Чт</span>
+      <span>Пт</span>
+      <span>Сб</span>
+      <span>Вс</span>
+    </div>
+
+    <div class="calendar-weeks">
+      <div *ngFor="let week of weeks" class="calendar-week">
+        <div 
+          *ngFor="let day of week.days" 
+          class="calendar-day"
+          [class.other-month]="!day.isCurrentMonth"
+          [class.today]="day.isToday">
+          <span class="day-number">{{ day.date | date:'d' }}</span>
+          <div class="day-bookings">
+            <div 
+              *ngFor="let booking of day.bookings" 
+              class="booking-chip"
+              [style.background-color]="getEventTypeColor(booking.eventTypeId)"
+              [title]="getEventTypeName(booking.eventTypeId) + ' - ' + formatTime(booking)">
+              {{ formatTime(booking) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

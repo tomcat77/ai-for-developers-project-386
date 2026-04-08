@@ -1,0 +1,119 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px 40px;
+  
+  .calendar-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    
+    .month-year {
+      font-size: 1.25rem;
+      font-weight: 500;
+      min-width: 180px;
+      text-align: center;
+      text-transform: capitalize;
+    }
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    padding: 48px 0;
+  }
+  
+  .calendar-grid {
+    .weekday-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: #e0e0e0;
+      border: 1px solid #e0e0e0;
+      border-bottom: none;
+      
+      span {
+        padding: 12px;
+        text-align: center;
+        font-weight: 500;
+        background: #fafafa;
+        color: #757575;
+      }
+    }
+    
+    .calendar-weeks {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: #e0e0e0;
+      border: 1px solid #e0e0e0;
+      
+      .calendar-week {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1px;
+      }
+      
+      .calendar-day {
+        min-height: 100px;
+        padding: 8px;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        
+        &.other-month {
+          background: #fafafa;
+          
+          .day-number {
+            color: #bdbdbd;
+          }
+        }
+        
+        &.today {
+          background: rgba(255, 152, 0, 0.1);
+          
+          .day-number {
+            color: #ff9800;
+            font-weight: 600;
+          }
+        }
+        
+        .day-number {
+          font-size: 0.875rem;
+          margin-bottom: 4px;
+        }
+        
+        .day-bookings {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          overflow-y: auto;
+          
+          .booking-chip {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 2px;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

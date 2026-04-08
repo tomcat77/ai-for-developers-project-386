@@ -1,0 +1,31 @@
+<mat-card class="summary-card">
+  <mat-card-header>
+    <mat-card-title>Детали события</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="eventType" class="event-info">
+      <div class="info-row">
+        <span class="label">Тип:</span>
+        <span class="value">{{ eventType.name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Длительность:</span>
+        <span class="value">{{ eventType.durationMinutes }} мин</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Описание:</span>
+        <span class="value">{{ eventType.description }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="selectedDate" class="selected-date">
+      <mat-icon>event</mat-icon>
+      <span>{{ selectedDate | date:'dd.MM.yyyy' }}</span>
+    </div>
+
+    <div *ngIf="selectedSlot" class="selected-slot">
+      <mat-icon>access_time</mat-icon>
+      <span>{{ selectedSlot.startTime | date:'HH:mm' }} — {{ selectedSlot.endTime | date:'HH:mm' }}</span>
+    </div>
+  </mat-card-content>
+</mat-card>
