@@ -10,6 +10,23 @@
       "cwd": "${workspaceFolder}/docs/api/typespec",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run Backend (Spring Boot)",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "com.callscalendar.CallsCalendarApplication",
+      "projectName": "backend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "javaHome": "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home",
+      "preLaunchTask": "Run Backend"
+    },
+    {
+      "name": "Run Frontend (Angular)",
+      "type": "node",
+      "request": "launch",
+      "task": "Run Frontend"
     }
   ]
 }

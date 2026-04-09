@@ -15,6 +15,46 @@
         "panel": "shared"
       },
       "problemMatcher": []
+    },
+    {
+      "label": "Run Backend",
+      "type": "shell",
+      "command": "cd backend && mvn clean spring-boot:run",
+      "options": {
+        "env": {
+          "JAVA_HOME": "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": ["$maven"]
+    },
+    {
+      "label": "Run Frontend",
+      "type": "npm",
+      "script": "start",
+      "path": "frontend/",
+      "options": {
+        "env": {
+          "NVM_DIR": "$HOME/.nvm",
+          "PATH": "$NVM_DIR/versions/node/v20.19.1/bin:$PATH"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
     }
   ]
 }
