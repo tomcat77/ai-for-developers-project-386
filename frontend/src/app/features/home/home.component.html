@@ -1,14 +1,15 @@
 <mat-toolbar color="primary" class="header">
+  <mat-icon>calendar_today</mat-icon>
   <span class="logo">Calendar</span>
   <span class="spacer"></span>
   <button mat-button (click)="navigateToAdmin()">Админка</button>
   <button mat-stroked-button (click)="navigateToBooking()">Записаться</button>
 </mat-toolbar>
 
-<div class="hero">
-  <div class="hero-content">
+<div class="main-container">
+  <div class="left-content">
     <span class="badge">БЫСТРАЯ ЗАПИСЬ НА ЗВОНОК</span>
-    <h1>Calendar</h1>
+    <h1><mat-icon>calendar_today</mat-icon> Calendar</h1>
     <p class="description">
       Запишитесь на звонок к владельцу календаря в несколько кликов.
       Выберите удобное время и тип события.
@@ -17,28 +18,28 @@
       Записаться
     </button>
   </div>
-</div>
 
-<div class="features-section">
-  <mat-card class="features-card">
-    <mat-card-header>
-      <mat-card-title>Возможности</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ul class="features-list">
-        <li>
-          <mat-icon>calendar_today</mat-icon>
-          <span>Выберите удобное время из свободных слотов</span>
-        </li>
-        <li>
-          <mat-icon>event</mat-icon>
-          <span>Выберите тип события: короткий звонок или длительная консультация</span>
-        </li>
-        <li>
-          <mat-icon>person</mat-icon>
-          <span>Подтверждение бронирования моментально</span>
-        </li>
-      </ul>
-    </mat-card-content>
-  </mat-card>
+  <div class="right-content">
+    <mat-card class="features-card">
+      <mat-card-header>
+        <mat-card-title>Возможности</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="features-list">
+          <li>
+            <mat-icon>calendar_today</mat-icon>
+            <span>Выберите удобное время из свободных слотов</span>
+          </li>
+          <li>
+            <mat-icon>event</mat-icon>
+            <span>Выберите тип события: короткий звонок или длительная консультация</span>
+          </li>
+          <li>
+            <mat-icon>person</mat-icon>
+            <span>Подтверждение бронирования моментально</span>
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
