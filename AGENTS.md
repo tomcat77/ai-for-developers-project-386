@@ -3,7 +3,7 @@
 ## Стек проекта
 1. Backend: Java 21 + Spring Boot 3
 2. Frontend: Angular 21 + Angular Material (библиотека UI компонентов) + [Angular Calendar](https://www.npmjs.com/package/angular-calendar) для просмотра календаря встреч
-3. Database: SQLite
+3. Database: SQLite, работает в памяти
 
 ## Структура проекта
 1. Компоненты проекта разложены по папкам `backend`, `frontend`, `database`
