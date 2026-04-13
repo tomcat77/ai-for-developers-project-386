@@ -26,7 +26,10 @@
       <div class="color-indicator" [style.background-color]="eventType.color"></div>
       <div class="card-content">
         <mat-card-header>
-          <mat-card-title>{{ eventType.name }}</mat-card-title>
+          <mat-card-title>
+            <span class="color-square" [style.background-color]="eventType.color"></span>
+            {{ eventType.name }}
+          </mat-card-title>
           <mat-card-subtitle>ID: {{ eventType.id }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>

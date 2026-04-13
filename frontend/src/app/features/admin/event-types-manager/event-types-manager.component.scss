@@ -57,6 +57,16 @@
         
         mat-card-title {
           font-size: 1.125rem;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .color-square {
+          width: 16px;
+          height: 16px;
+          border-radius: 2px;
+          flex-shrink: 0;
         }
         
         mat-card-subtitle {

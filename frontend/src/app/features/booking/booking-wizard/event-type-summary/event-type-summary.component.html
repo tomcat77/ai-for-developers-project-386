@@ -6,7 +6,10 @@
     <div *ngIf="eventType" class="event-info">
       <div class="info-row">
         <span class="label">Тип:</span>
-        <span class="value">{{ eventType.name }}</span>
+        <span class="value">
+          <span class="color-square" [style.background-color]="eventType.color"></span>
+          {{ eventType.name }}
+        </span>
       </div>
       <div class="info-row">
         <span class="label">Длительность:</span>
