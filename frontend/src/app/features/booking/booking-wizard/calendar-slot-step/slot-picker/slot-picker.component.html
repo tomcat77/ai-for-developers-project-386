@@ -14,10 +14,15 @@
     <mat-list-option
       *ngFor="let slot of slots"
       [selected]="isSelected(slot)"
+      [disabled]="isDisabled(slot)"
       (click)="selectSlot(slot)"
-      class="slot-item">
-      <mat-icon matListItemIcon>schedule</mat-icon>
-      <span matListItemTitle>{{ formatTime(slot) }}</span>
+      class="slot-item"
+      [class.slot-disabled]="isDisabled(slot)">
+      <mat-icon matListItemIcon>{{ isDisabled(slot) ? 'event_busy' : 'schedule' }}</mat-icon>
+      <span matListItemTitle>
+        {{ formatTime(slot) }}
+        <span *ngIf="isDisabled(slot)" class="slot-status">(Занято)</span>
+      </span>
     </mat-list-option>
   </mat-selection-list>
 </div>

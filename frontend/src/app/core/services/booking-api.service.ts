@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { EventType } from '../models/event-type.model';
 import { Booking, CreateBookingRequest } from '../models/booking.model';
-import { AvailableSlot } from '../models/slot.model';
+import { DaySlot } from '../models/slot.model';
 import { CalendarOwner } from '../models/owner.model';
 import { ConflictError } from '../models/error.model';
 
@@ -21,8 +21,8 @@ export class BookingApiService {
     return this.http.get<EventType>(`${this.baseUrl}/event-types/${id}`);
   }
 
-  getAvailableSlots(eventTypeId: string, date: string): Observable<AvailableSlot[]> {
-    return this.http.get<AvailableSlot[]>(`${this.baseUrl}/bookings/available-slots`, {
+  getDaySlots(eventTypeId: string, date: string): Observable<DaySlot[]> {
+    return this.http.get<DaySlot[]>(`${this.baseUrl}/bookings/day-slots`, {
       params: { eventTypeId, date }
     });
   }

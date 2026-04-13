@@ -1,6 +1,6 @@
 package com.callscalendar.service;
 
-import com.callscalendar.dto.AvailableSlot;
+import com.callscalendar.dto.DaySlot;
 import com.callscalendar.dto.CreateBookingRequest;
 import com.callscalendar.entity.Booking;
 import com.callscalendar.entity.EventType;
@@ -49,7 +49,7 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
     
-    public List<AvailableSlot> getAvailableSlots(String eventTypeId, String dateStr) {
+    public List<DaySlot> getDaySlots(String eventTypeId, String dateStr) {
         EventType eventType = eventTypeService.getEventTypeById(eventTypeId);
         LocalDate date = LocalDate.parse(dateStr);
         
@@ -58,7 +58,7 @@ public class BookingService {
         
         List<Booking> existingBookings = bookingRepository.findByStartTimeBetween(dayStart, dayEnd);
         
-        List<AvailableSlot> slots = new ArrayList<>();
+        List<DaySlot> slots = new ArrayList<>();
         Instant current = dayStart;
         
         while (current.plus(Duration.ofMinutes(eventType.getDurationMinutes())).isBefore(dayEnd) ||
@@ -73,9 +73,7 @@ public class BookingService {
                 )
             );
             
-            if (!hasConflict) {
-                slots.add(new AvailableSlot(current, slotEnd));
-            }
+            slots.add(new DaySlot(current, slotEnd, !hasConflict));
             
             current = current.plus(Duration.ofMinutes(SLOT_MINUTES));
         }

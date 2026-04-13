@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AvailableSlot } from '../../../../../core/models';
+import { DaySlot } from '../../../../../core/models';
 
 @Component({
   selector: 'app-slot-picker',
@@ -13,20 +13,25 @@ import { AvailableSlot } from '../../../../../core/models';
   imports: [CommonModule, MatListModule, MatIconModule, MatProgressSpinnerModule]
 })
 export class SlotPickerComponent {
-  @Input() slots: AvailableSlot[] = [];
+  @Input() slots: DaySlot[] = [];
   @Input() loading = false;
-  @Input() selectedSlot: AvailableSlot | null = null;
-  @Output() slotSelect = new EventEmitter<AvailableSlot>();
+  @Input() selectedSlot: DaySlot | null = null;
+  @Output() slotSelect = new EventEmitter<DaySlot>();
 
-  selectSlot(slot: AvailableSlot): void {
+  selectSlot(slot: DaySlot): void {
+    if (!slot.isAvailable) return;
     this.slotSelect.emit(slot);
   }
 
-  isSelected(slot: AvailableSlot): boolean {
+  isSelected(slot: DaySlot): boolean {
     return this.selectedSlot?.startTime === slot.startTime;
   }
 
-  formatTime(slot: AvailableSlot): string {
+  isDisabled(slot: DaySlot): boolean {
+    return !slot.isAvailable;
+  }
+
+  formatTime(slot: DaySlot): string {
     const start = new Date(slot.startTime);
     const end = new Date(slot.endTime);
     const startStr = start.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });

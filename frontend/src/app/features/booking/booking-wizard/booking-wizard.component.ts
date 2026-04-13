@@ -8,7 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BookingApiService } from '../../../core/services/booking-api.service';
-import { EventType, AvailableSlot, Booking } from '../../../core/models';
+import { EventType, DaySlot, Booking } from '../../../core/models';
 import { BookingSlotStepComponent } from '../booking-slot-step.component';
 import { EventTypeSummaryComponent } from './event-type-summary/event-type-summary.component';
 import { GuestInfoStepComponent } from '../guest-info-step/guest-info-step.component';
@@ -41,7 +41,7 @@ export class BookingWizardComponent implements OnInit {
   step = signal<'select' | 'confirm'>('select');
   eventType: EventType | null = null;
   selectedDate: Date | null = null;
-  selectedSlot = signal<AvailableSlot | null>(null);
+  selectedSlot = signal<DaySlot | null>(null);
   loading = signal(true);
   successBooking: Booking | null = null;
 
@@ -71,7 +71,7 @@ export class BookingWizardComponent implements OnInit {
     this.selectedSlot.set(null);
   }
 
-  onSlotSelect(slot: AvailableSlot): void {
+  onSlotSelect(slot: DaySlot): void {
     this.selectedSlot.set(slot);
   }
 

@@ -51,10 +51,11 @@ namespace CallsCalendar {
     guestContact?: string;
   }
 
-  /** Свободный интервал в календаре. */
-  model AvailableSlot {
+  /** Доступный интервал в календаре на конкретный день. */
+  model DaySlot {
     startTime: utcDateTime;
     endTime: utcDateTime;
+    isAvailable: boolean;
   }
 
   /** Ошибка: на это время уже есть запись (в т.ч. другого типа события). */

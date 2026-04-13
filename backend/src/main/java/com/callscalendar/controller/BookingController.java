@@ -1,6 +1,6 @@
 package com.callscalendar.controller;
 
-import com.callscalendar.dto.AvailableSlot;
+import com.callscalendar.dto.DaySlot;
 import com.callscalendar.dto.CreateBookingRequest;
 import com.callscalendar.entity.Booking;
 import com.callscalendar.entity.EventType;
@@ -43,11 +43,11 @@ public class BookingController {
         }
     }
     
-    @GetMapping("/bookings/available-slots")
-    public ResponseEntity<List<AvailableSlot>> getAvailableSlots(
+    @GetMapping("/bookings/day-slots")
+    public ResponseEntity<List<DaySlot>> getDaySlots(
             @RequestParam String eventTypeId,
             @RequestParam String date) {
-        return ResponseEntity.ok(bookingService.getAvailableSlots(eventTypeId, date));
+        return ResponseEntity.ok(bookingService.getDaySlots(eventTypeId, date));
     }
     
     @GetMapping("/owner")

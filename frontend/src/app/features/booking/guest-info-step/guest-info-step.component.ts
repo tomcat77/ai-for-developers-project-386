@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { EventType, AvailableSlot, GuestContactForm, Booking } from '../../../core/models';
+import { EventType, DaySlot, GuestContactForm, Booking } from '../../../core/models';
 import { BookingApiService } from '../../../core/services/booking-api.service';
 import { TimezoneUtils } from '../../../core/utils/timezone.utils';
 
@@ -32,7 +32,7 @@ import { TimezoneUtils } from '../../../core/utils/timezone.utils';
 export class GuestInfoStepComponent implements OnInit {
   @Input() eventType: EventType | null = null;
   @Input() selectedDate: Date | null = null;
-  @Input() selectedSlot: AvailableSlot | null = null;
+  @Input() selectedSlot: DaySlot | null = null;
   
   @Output() back = new EventEmitter<void>();
   @Output() booked = new EventEmitter<Booking>();

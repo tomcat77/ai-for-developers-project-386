@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { CalendarWidgetComponent } from './booking-wizard/calendar-slot-step/calendar-widget/calendar-widget.component';
 import { SlotPickerComponent } from './booking-wizard/calendar-slot-step/slot-picker/slot-picker.component';
 import { BookingApiService } from '../../core/services/booking-api.service';
-import { EventType, AvailableSlot } from '../../core/models';
+import { EventType, DaySlot } from '../../core/models';
 
 @Component({
   selector: 'app-booking-slot-step',
@@ -22,14 +22,14 @@ import { EventType, AvailableSlot } from '../../core/models';
 export class BookingSlotStepComponent implements OnChanges {
   @Input() eventType: EventType | null = null;
   @Input() selectedDate: Date | null = null;
-  @Input() selectedSlot: AvailableSlot | null = null;
+  @Input() selectedSlot: DaySlot | null = null;
 
   @Output() dateSelect = new EventEmitter<Date>();
-  @Output() slotSelect = new EventEmitter<AvailableSlot>();
+  @Output() slotSelect = new EventEmitter<DaySlot>();
 
   private bookingApi = inject(BookingApiService);
   
-  slots: AvailableSlot[] = [];
+  slots: DaySlot[] = [];
   loading = signal(false);
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,7 +46,7 @@ export class BookingSlotStepComponent implements OnChanges {
     this.dateSelect.emit(date);
   }
 
-  onSlotSelect(slot: AvailableSlot): void {
+  onSlotSelect(slot: DaySlot): void {
     this.slotSelect.emit(slot);
   }
 
@@ -58,7 +58,7 @@ export class BookingSlotStepComponent implements OnChanges {
     this.loading.set(true);
     const dateStr = format(this.selectedDate, 'yyyy-MM-dd');
 
-    this.bookingApi.getAvailableSlots(this.eventType.id, dateStr).subscribe({
+    this.bookingApi.getDaySlots(this.eventType.id, dateStr).subscribe({
       next: (slots) => {
         this.slots = slots;
         this.loading.set(false);

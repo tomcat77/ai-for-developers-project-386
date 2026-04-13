@@ -1,13 +1,13 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { EventType } from '../models/event-type.model';
-import { AvailableSlot } from '../models/slot.model';
+import { DaySlot } from '../models/slot.model';
 import { GuestContactForm } from '../models/booking.model';
 
 @Injectable({ providedIn: 'root' })
 export class BookingStateService {
   readonly selectedEventType = signal<EventType | null>(null);
   readonly selectedDate = signal<Date | null>(null);
-  readonly selectedSlot = signal<AvailableSlot | null>(null);
+  readonly selectedSlot = signal<DaySlot | null>(null);
   readonly guestInfo = signal<GuestContactForm | null>(null);
 
   readonly canProceedToConfirm = computed(() => this.selectedSlot() !== null);
@@ -30,7 +30,7 @@ export class BookingStateService {
     this.selectedSlot.set(null);
   }
 
-  selectSlot(slot: AvailableSlot): void {
+  selectSlot(slot: DaySlot): void {
     this.selectedSlot.set(slot);
   }
 

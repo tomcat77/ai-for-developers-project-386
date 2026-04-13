@@ -1,4 +1,5 @@
-export interface AvailableSlot {
+export interface DaySlot {
   startTime: string;
   endTime: string;
+  isAvailable: boolean;
 }

@@ -28,13 +28,13 @@ namespace CallsCalendar {
       @body error: ConflictError;
     };
 
-    @doc("Свободные слоты для типа события на дату. Параметр date: ISO 8601, дата YYYY-MM-DD.")
+    @doc("Доступные слоты для типа события на дату. Параметр date: ISO 8601, дата YYYY-MM-DD.")
     @get
-    @route("/bookings/available-slots")
-    getAvailableSlots(
+    @route("/bookings/day-slots")
+    getDaySlots(
       @query eventTypeId: string,
       @query date: string,
-    ): AvailableSlot[];
+    ): DaySlot[];
 
     @doc("Профиль владельца календаря.")
     @get
