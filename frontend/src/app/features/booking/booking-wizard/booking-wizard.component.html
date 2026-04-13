@@ -1,10 +1,10 @@
-<ng-container *ngIf="loading">
+<ng-container *ngIf="loading()">
   <div class="loading-screen">
     <mat-spinner diameter="48"></mat-spinner>
   </div>
 </ng-container>
 
-<ng-container *ngIf="!loading && eventType && !successBooking">
+<ng-container *ngIf="!loading() && eventType && !successBooking">
   <ng-container *ngIf="step() === 'select' || step() === null">
     <mat-toolbar color="primary" class="header">
       <button mat-icon-button (click)="goToCatalog()">

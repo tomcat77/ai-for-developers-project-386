@@ -9,7 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AdminApiService } from '../../../core/services/admin-api.service';
-import { EventType, CreateEventTypeRequest } from '../../../core/models';
+import { EventType } from '../../../core/models';
 import { EventTypeDialogComponent } from './event-type-dialog/event-type-dialog.component';
 
 @Component({
@@ -35,22 +35,22 @@ export class EventTypesManagerComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   eventTypes: EventType[] = [];
-  loading = true;
+  loading = signal(true);
 
   ngOnInit(): void {
     this.loadEventTypes();
   }
 
   loadEventTypes(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.adminApi.getEventTypes().subscribe({
       next: (eventTypes) => {
         this.eventTypes = eventTypes;
-        this.loading = false;
+        this.loading.set(false);
       },
       error: () => {
         this.snackBar.open('Не удалось загрузить типы событий', 'Закрыть');
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }

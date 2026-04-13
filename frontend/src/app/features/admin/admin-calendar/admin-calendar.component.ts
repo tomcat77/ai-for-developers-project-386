@@ -50,7 +50,8 @@ export class AdminCalendarComponent implements OnInit {
   weeks: CalendarWeek[] = [];
   eventTypes: EventType[] = [];
   bookings: Booking[] = [];
-  loading = true;
+  /** Signal so the view updates under zoneless change detection after HTTP callbacks. */
+  loading = signal(true);
   locale = ru;
 
   ngOnInit(): void {
@@ -58,7 +59,7 @@ export class AdminCalendarComponent implements OnInit {
   }
 
   loadData(): void {
-    this.loading = true;
+    this.loading.set(true);
 
     this.adminApi.getEventTypes().subscribe({
       next: (eventTypes) => this.eventTypes = eventTypes
@@ -66,12 +67,15 @@ export class AdminCalendarComponent implements OnInit {
 
     this.adminApi.getBookings().subscribe({
       next: (bookings) => {
-        this.bookings = bookings;
-        this.generateCalendar();
-        this.loading = false;
+        try {
+          this.bookings = bookings;
+          this.generateCalendar();
+        } finally {
+          this.loading.set(false);
+        }
       },
       error: () => {
-        this.loading = false;
+        this.loading.set(false);
         this.snackBar.open('Не удалось загрузить бронирования', 'Закрыть');
       }
     });

@@ -21,7 +21,7 @@
   <h2 class="title">Выберите тип события</h2>
   <p class="subtitle">Продолжительность звонка и описание</p>
 
-  <div *ngIf="loading" class="loading">
+  <div *ngIf="loading()" class="loading">
     <mat-spinner diameter="40"></mat-spinner>
   </div>
 
@@ -29,7 +29,7 @@
     {{ error }}
   </div>
 
-  <div *ngIf="!loading && !error" class="event-types-grid">
+  <div *ngIf="!loading() && !error" class="event-types-grid">
     <mat-card 
       *ngFor="let eventType of eventTypes" 
       class="event-type-card"
@@ -47,7 +47,7 @@
     </mat-card>
   </div>
 
-  <div *ngIf="!loading && eventTypes.length === 0" class="empty-state">
+  <div *ngIf="!loading() && eventTypes.length === 0" class="empty-state">
     <p>Нет доступных типов событий</p>
   </div>
 </div>

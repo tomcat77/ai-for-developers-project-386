@@ -9,7 +9,7 @@
   <div class="slots-column">
     <app-slot-picker
       [slots]="slots"
-      [loading]="loading"
+      [loading]="loading()"
       [selectedSlot]="selectedSlot"
       (slotSelect)="onSlotSelect($event)">
     </app-slot-picker>

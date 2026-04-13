@@ -42,7 +42,7 @@ export class BookingWizardComponent implements OnInit {
   eventType: EventType | null = null;
   selectedDate: Date | null = null;
   selectedSlot: AvailableSlot | null = null;
-  loading = true;
+  loading = signal(true);
   successBooking: Booking | null = null;
 
   canProceed = computed(() => this.selectedSlot !== null);
@@ -57,9 +57,10 @@ export class BookingWizardComponent implements OnInit {
     this.bookingApi.getEventType(id).subscribe({
       next: (eventType) => {
         this.eventType = eventType;
-        this.loading = false;
+        this.loading.set(false);
       },
       error: () => {
+        this.loading.set(false);
         this.router.navigate(['/book']);
       }
     });

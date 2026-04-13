@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { format } from 'date-fns';
@@ -30,7 +30,7 @@ export class BookingSlotStepComponent implements OnChanges {
   private bookingApi = inject(BookingApiService);
   
   slots: AvailableSlot[] = [];
-  loading = false;
+  loading = signal(false);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedDate'] && this.selectedDate && this.eventType) {
@@ -55,17 +55,17 @@ export class BookingSlotStepComponent implements OnChanges {
       return;
     }
 
-    this.loading = true;
+    this.loading.set(true);
     const dateStr = format(this.selectedDate, 'yyyy-MM-dd');
 
     this.bookingApi.getAvailableSlots(this.eventType.id, dateStr).subscribe({
       next: (slots) => {
         this.slots = slots;
-        this.loading = false;
+        this.loading.set(false);
       },
       error: () => {
         this.slots = [];
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -33,7 +33,7 @@ export class BookingCatalogComponent implements OnInit {
   
   owner: CalendarOwner | null = null;
   eventTypes: EventType[] = [];
-  loading = true;
+  loading = signal(true);
   error = '';
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class BookingCatalogComponent implements OnInit {
   }
 
   private loadData(): void {
-    this.loading = true;
+    this.loading.set(true);
     
     this.bookingApi.getOwner().subscribe({
       next: (owner) => this.owner = owner,
@@ -51,11 +51,11 @@ export class BookingCatalogComponent implements OnInit {
     this.bookingApi.getEventTypes().subscribe({
       next: (eventTypes) => {
         this.eventTypes = eventTypes;
-        this.loading = false;
+        this.loading.set(false);
       },
       error: () => {
         this.error = 'Не удалось загрузить типы событий';
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }

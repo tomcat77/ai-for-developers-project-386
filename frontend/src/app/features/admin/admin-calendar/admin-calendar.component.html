@@ -23,11 +23,11 @@
     </button>
   </div>
 
-  <div *ngIf="loading" class="loading">
+  <div *ngIf="loading()" class="loading">
     <mat-spinner diameter="48"></mat-spinner>
   </div>
 
-  <div *ngIf="!loading" class="calendar-grid">
+  <div *ngIf="!loading()" class="calendar-grid">
     <div class="weekday-header">
       <span>Пн</span>
       <span>Вт</span>

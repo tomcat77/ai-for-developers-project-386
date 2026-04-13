@@ -17,11 +17,11 @@
     </button>
   </div>
 
-  <div *ngIf="loading" class="loading">
+  <div *ngIf="loading()" class="loading">
     <mat-spinner diameter="48"></mat-spinner>
   </div>
 
-  <div *ngIf="!loading" class="event-types-list">
+  <div *ngIf="!loading()" class="event-types-list">
     <mat-card *ngFor="let eventType of eventTypes" class="event-type-card">
       <div class="color-indicator" [style.background-color]="eventType.color"></div>
       <div class="card-content">
@@ -42,7 +42,7 @@
     </mat-card>
   </div>
 
-  <div *ngIf="!loading && eventTypes.length === 0" class="empty-state">
+  <div *ngIf="!loading() && eventTypes.length === 0" class="empty-state">
     <p>Нет типов событий. Создайте первый тип.</p>
   </div>
 </div>

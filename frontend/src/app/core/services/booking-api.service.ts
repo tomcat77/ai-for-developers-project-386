@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { EventType, CreateEventTypeRequest } from '../models/event-type.model';
+import { EventType } from '../models/event-type.model';
 import { Booking, CreateBookingRequest } from '../models/booking.model';
 import { AvailableSlot } from '../models/slot.model';
 import { CalendarOwner } from '../models/owner.model';
