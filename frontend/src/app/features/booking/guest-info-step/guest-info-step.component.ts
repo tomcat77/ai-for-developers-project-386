@@ -47,7 +47,7 @@ export class GuestInfoStepComponent implements OnInit {
     notes: ['', Validators.maxLength(500)]
   });
 
-  submitting = false;
+  submitting = signal(false);
   error = signal<string | null>(null);
 
   ngOnInit(): void {
@@ -107,7 +107,7 @@ export class GuestInfoStepComponent implements OnInit {
       return;
     }
 
-    this.submitting = true;
+    this.submitting.set(true);
     this.error.set(null);
 
     this.bookingApi.createBooking({
@@ -117,7 +117,7 @@ export class GuestInfoStepComponent implements OnInit {
     }).subscribe({
       next: (booking) => {
         this.booked.emit(booking);
-        this.submitting = false;
+        this.submitting.set(false);
       },
       error: (err) => {
         if (err.status === 409) {
@@ -125,7 +125,7 @@ export class GuestInfoStepComponent implements OnInit {
         } else {
           this.error.set('Не удалось создать бронирование. Попробуйте позже.');
         }
-        this.submitting = false;
+        this.submitting.set(false);
       }
     });
   }

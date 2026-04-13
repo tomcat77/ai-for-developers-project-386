@@ -72,14 +72,14 @@
     <button mat-stroked-button (click)="goBack()">
       Назад
     </button>
-    <button mat-stroked-button (click)="skip()" [disabled]="submitting">
+    <button mat-stroked-button (click)="skip()" [disabled]="submitting()">
       Пропустить
     </button>
     <button 
       mat-raised-button 
       color="primary" 
       (click)="submit()" 
-      [disabled]="submitting || (form.get('includeContact')?.value && !form.valid)">
+      [disabled]="submitting() || (form.get('includeContact')?.value && !form.valid)">
       Забронировать
     </button>
   </div>

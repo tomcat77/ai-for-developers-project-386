@@ -41,11 +41,11 @@ export class BookingWizardComponent implements OnInit {
   step = signal<'select' | 'confirm'>('select');
   eventType: EventType | null = null;
   selectedDate: Date | null = null;
-  selectedSlot: AvailableSlot | null = null;
+  selectedSlot = signal<AvailableSlot | null>(null);
   loading = signal(true);
   successBooking: Booking | null = null;
 
-  canProceed = computed(() => this.selectedSlot !== null);
+  canProceed = computed(() => this.selectedSlot() !== null);
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -68,11 +68,11 @@ export class BookingWizardComponent implements OnInit {
 
   onDateSelect(date: Date): void {
     this.selectedDate = date;
-    this.selectedSlot = null;
+    this.selectedSlot.set(null);
   }
 
   onSlotSelect(slot: AvailableSlot): void {
-    this.selectedSlot = slot;
+    this.selectedSlot.set(slot);
   }
 
   proceedToConfirm(): void {

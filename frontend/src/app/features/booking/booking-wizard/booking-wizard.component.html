@@ -17,13 +17,13 @@
       <app-event-type-summary
         [eventType]="eventType"
         [selectedDate]="selectedDate"
-        [selectedSlot]="selectedSlot">
+        [selectedSlot]="selectedSlot()">
       </app-event-type-summary>
 
       <app-booking-slot-step
         [eventType]="eventType"
         [selectedDate]="selectedDate"
-        [selectedSlot]="selectedSlot"
+        [selectedSlot]="selectedSlot()"
         (dateSelect)="onDateSelect($event)"
         (slotSelect)="onSlotSelect($event)">
       </app-booking-slot-step>
@@ -44,7 +44,7 @@
     <app-guest-info-step
       [eventType]="eventType"
       [selectedDate]="selectedDate"
-      [selectedSlot]="selectedSlot"
+      [selectedSlot]="selectedSlot()"
       (back)="goBack()"
       (booked)="onBooked($event)">
     </app-guest-info-step>
