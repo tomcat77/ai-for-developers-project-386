@@ -42,6 +42,7 @@ export class GuestInfoStepComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
     includeContact: [false],
+    name: ['', Validators.required],
     email: ['', Validators.email],
     phone: [''],
     notes: ['', Validators.maxLength(500)]
@@ -53,12 +54,15 @@ export class GuestInfoStepComponent implements OnInit {
   ngOnInit(): void {
     this.form.get('includeContact')?.valueChanges.subscribe(include => {
       if (include) {
+        this.form.get('name')?.addValidators(Validators.required);
         this.form.get('email')?.addValidators(Validators.email);
         this.form.get('phone')?.addValidators(Validators.required);
       } else {
+        this.form.get('name')?.removeValidators(Validators.required);
         this.form.get('email')?.removeValidators(Validators.email);
         this.form.get('phone')?.removeValidators(Validators.required);
       }
+      this.form.get('name')?.updateValueAndValidity();
       this.form.get('email')?.updateValueAndValidity();
       this.form.get('phone')?.updateValueAndValidity();
     });
@@ -83,7 +87,7 @@ export class GuestInfoStepComponent implements OnInit {
     const guestContact = contactParts.length > 0 ? contactParts.join(', ') : undefined;
 
     this.submitBooking({
-      guestName: undefined,
+      guestName: formValue.name,
       guestContact
     });
   }

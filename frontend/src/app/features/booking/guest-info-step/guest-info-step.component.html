@@ -42,6 +42,14 @@
 
         <div *ngIf="form.get('includeContact')?.value" class="contact-fields">
           <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Имя</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="form.get('name')?.hasError('required')">
+              Введите имя
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" type="email">
             <mat-error *ngIf="form.get('email')?.hasError('email')">

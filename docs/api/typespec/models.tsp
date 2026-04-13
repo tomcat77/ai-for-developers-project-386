@@ -47,8 +47,8 @@ namespace CallsCalendar {
   model CreateBookingRequest {
     eventTypeId: string;
     startTime: utcDateTime;
-    guestName: string;
-    guestContact: string;
+    guestName?: string;
+    guestContact?: string;
   }
 
   /** Свободный интервал в календаре. */
