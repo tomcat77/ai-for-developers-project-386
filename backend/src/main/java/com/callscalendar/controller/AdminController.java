@@ -29,6 +29,12 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
     
+    @PutMapping("/event-types")
+    public ResponseEntity<EventType> updateEventType(@RequestBody EventType eventType) {
+        EventType updated = eventTypeService.updateEventType(eventType.getId(), eventType);
+        return ResponseEntity.ok(updated);
+    }
+    
     @GetMapping("/bookings")
     public ResponseEntity<List<Booking>> getBookings() {
         return ResponseEntity.ok(bookingService.getAllBookings());

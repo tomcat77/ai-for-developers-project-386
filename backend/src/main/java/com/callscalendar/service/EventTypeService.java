@@ -31,4 +31,14 @@ public class EventTypeService {
         eventType.setColor(request.getColor());
         return eventTypeRepository.save(eventType);
     }
+    
+    public EventType updateEventType(String id, EventType request) {
+        EventType eventType = eventTypeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("EventType not found: " + id));
+        eventType.setName(request.getName());
+        eventType.setDescription(request.getDescription());
+        eventType.setDurationMinutes(request.getDurationMinutes());
+        eventType.setColor(request.getColor());
+        return eventTypeRepository.save(eventType);
+    }
 }

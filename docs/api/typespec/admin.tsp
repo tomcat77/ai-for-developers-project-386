@@ -15,6 +15,11 @@ namespace CallsCalendar {
       @body resource: EventType;
     };
 
+    @doc("Обновить тип события (владелец).")
+    @put
+    @route("/event-types")
+    updateEventType(@body body: EventType): EventType;
+
     @doc("Все бронирования в одном списке (предстоящие встречи).")
     @get
     @route("/bookings")
