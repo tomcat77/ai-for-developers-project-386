@@ -1,0 +1,17 @@
+{
+  "name": "calls-calendar",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/tomcat77/ai-for-developers-project-386/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/tomcat77/ai-for-developers-project-386/actions) # Проект: \"Запись на звонок\"",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0"
+  }
+}
