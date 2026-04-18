@@ -9,54 +9,96 @@
 </mat-toolbar>
 
 <div class="content">
-  <div class="calendar-header">
-    <button mat-icon-button (click)="previousMonth()">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <span class="month-year">{{ getMonthYear() }}</span>
-    <button mat-icon-button (click)="nextMonth()">
-      <mat-icon>chevron_right</mat-icon>
-    </button>
-    <button mat-stroked-button (click)="loadData()">
-      <mat-icon>refresh</mat-icon>
-      Обновить
-    </button>
-  </div>
+  <div class="calendar-container" [class.with-details]="selectedBooking">
+    <div class="calendar-section">
+      <div class="calendar-header">
+        <button mat-icon-button (click)="previousMonth()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span class="month-year">{{ getMonthYear() }}</span>
+        <button mat-icon-button (click)="nextMonth()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        <button mat-stroked-button (click)="loadData()">
+          <mat-icon>refresh</mat-icon>
+          Обновить
+        </button>
+      </div>
 
-  <div *ngIf="loading()" class="loading">
-    <mat-spinner diameter="48"></mat-spinner>
-  </div>
+      <div *ngIf="loading()" class="loading">
+        <mat-spinner diameter="48"></mat-spinner>
+      </div>
 
-  <div *ngIf="!loading()" class="calendar-grid">
-    <div class="weekday-header">
-      <span>Пн</span>
-      <span>Вт</span>
-      <span>Ср</span>
-      <span>Чт</span>
-      <span>Пт</span>
-      <span>Сб</span>
-      <span>Вс</span>
-    </div>
+      <div *ngIf="!loading()" class="calendar-grid">
+        <div class="weekday-header">
+          <span>Пн</span>
+          <span>Вт</span>
+          <span>Ср</span>
+          <span>Чт</span>
+          <span>Пт</span>
+          <span>Сб</span>
+          <span>Вс</span>
+        </div>
 
-    <div class="calendar-weeks">
-      <div *ngFor="let week of weeks" class="calendar-week">
-        <div 
-          *ngFor="let day of week.days" 
-          class="calendar-day"
-          [class.other-month]="!day.isCurrentMonth"
-          [class.today]="day.isToday">
-          <span class="day-number">{{ day.date | date:'d' }}</span>
-          <div class="day-bookings">
+        <div class="calendar-weeks">
+          <div *ngFor="let week of weeks" class="calendar-week">
             <div 
-              *ngFor="let booking of day.bookings" 
-              class="booking-chip"
-              [style.background-color]="getEventTypeColor(booking.eventTypeId)"
-              [title]="getEventTypeName(booking.eventTypeId) + ' - ' + formatTime(booking)">
-              {{ formatTime(booking) }}
+              *ngFor="let day of week.days" 
+              class="calendar-day"
+              [class.other-month]="!day.isCurrentMonth"
+              [class.today]="day.isToday">
+              <span class="day-number">{{ day.date | date:'d' }}</span>
+              <div class="day-bookings">
+                <div 
+                  *ngFor="let booking of day.bookings" 
+                  class="booking-chip"
+                  [style.background-color]="getEventTypeColor(booking.eventTypeId)"
+                  [title]="getEventTypeName(booking.eventTypeId) + ' - ' + formatTime(booking)"
+                  (click)="selectBooking(booking, $event)">
+                  {{ formatTime(booking) }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="details-panel" *ngIf="selectedBooking">
+      <div class="details-header">
+        <h3>Детали бронирования</h3>
+        <button mat-icon-button (click)="closeDetails()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <mat-card class="details-card">
+        <mat-card-content>
+          <div class="detail-row">
+            <span class="label">Тип:</span>
+            <span class="value">
+              <span class="event-type-badge" [style.background-color]="getEventTypeColor(selectedBooking.eventTypeId)">
+                {{ getEventTypeName(selectedBooking.eventTypeId) }}
+              </span>
+            </span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Дата и время:</span>
+            <span class="value">{{ formatDateTime(selectedBooking) }}</span>
+          </div>
+          <div class="detail-row" *ngIf="selectedBooking.guestName">
+            <span class="label">Имя:</span>
+            <span class="value">{{ selectedBooking.guestName }}</span>
+          </div>
+          <div class="detail-row" *ngIf="selectedBooking.guestContact">
+            <span class="label">Контакт:</span>
+            <span class="value">{{ selectedBooking.guestContact }}</span>
+          </div>
+          <div class="detail-row" *ngIf="!selectedBooking.guestName && !selectedBooking.guestContact">
+            <span class="label">Контакт:</span>
+            <span class="value no-data">Нет данных</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

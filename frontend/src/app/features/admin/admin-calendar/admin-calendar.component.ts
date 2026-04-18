@@ -50,6 +50,7 @@ export class AdminCalendarComponent implements OnInit {
   weeks: CalendarWeek[] = [];
   eventTypes: EventType[] = [];
   bookings: Booking[] = [];
+  selectedBooking: Booking | null = null;
   /** Signal so the view updates under zoneless change detection after HTTP callbacks. */
   loading = signal(true);
   locale = ru;
@@ -137,5 +138,18 @@ export class AdminCalendarComponent implements OnInit {
 
   formatTime(booking: Booking): string {
     return format(new Date(booking.startTime), 'HH:mm');
+  }
+
+  selectBooking(booking: Booking, event: Event): void {
+    event.stopPropagation();
+    this.selectedBooking = booking;
+  }
+
+  closeDetails(): void {
+    this.selectedBooking = null;
+  }
+
+  formatDateTime(booking: Booking): string {
+    return format(new Date(booking.startTime), 'd MMMM yyyy, HH:mm', { locale: this.locale });
   }
 }
