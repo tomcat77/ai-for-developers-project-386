@@ -8,11 +8,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, format, startOfWeek, endOfWeek, eachWeekOfInterval } from 'date-fns';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, format, startOfWeek, endOfWeek, eachWeekOfInterval, addDays, subDays } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { AdminApiService } from '../../../core/services/admin-api.service';
 import { EventType } from '../../../core/models';
 import { Booking } from '../../../core/models';
+
+type CalendarView = 'day' | 'week' | 'month';
 
 interface CalendarDay {
   date: Date;
@@ -39,7 +42,8 @@ interface CalendarWeek {
     MatCardModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonToggleModule
   ]
 })
 export class AdminCalendarComponent implements OnInit {
@@ -47,11 +51,12 @@ export class AdminCalendarComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   viewDate: Date = new Date();
+  viewMode: CalendarView = 'month';
   weeks: CalendarWeek[] = [];
+  weekDays: CalendarDay[] = [];
   eventTypes: EventType[] = [];
   bookings: Booking[] = [];
   selectedBooking: Booking | null = null;
-  /** Signal so the view updates under zoneless change detection after HTTP callbacks. */
   loading = signal(true);
   locale = ru;
 
@@ -92,7 +97,39 @@ export class AdminCalendarComponent implements OnInit {
     this.generateCalendar();
   }
 
+  previousDay(): void {
+    this.viewDate = subDays(this.viewDate, 1);
+    this.generateCalendar();
+  }
+
+  nextDay(): void {
+    this.viewDate = addDays(this.viewDate, 1);
+    this.generateCalendar();
+  }
+
+  previousWeek(): void {
+    this.viewDate = subDays(this.viewDate, 7);
+    this.generateCalendar();
+  }
+
+  nextWeek(): void {
+    this.viewDate = addDays(this.viewDate, 7);
+    this.generateCalendar();
+  }
+
+  onViewModeChange(): void {
+    this.generateCalendar();
+  }
+
   getMonthYear(): string {
+    if (this.viewMode === 'day') {
+      return format(this.viewDate, 'd MMMM yyyy', { locale: this.locale });
+    }
+    if (this.viewMode === 'week') {
+      const weekStart = startOfWeek(this.viewDate, { weekStartsOn: 1 });
+      const weekEnd = endOfWeek(this.viewDate, { weekStartsOn: 1 });
+      return `${format(weekStart, 'd MMM', { locale: this.locale })} - ${format(weekEnd, 'd MMM yyyy', { locale: this.locale })}`;
+    }
     return format(this.viewDate, 'MMMM yyyy', { locale: this.locale });
   }
 
@@ -107,26 +144,45 @@ export class AdminCalendarComponent implements OnInit {
   }
 
   private generateCalendar(): void {
-    const monthStart = startOfMonth(this.viewDate);
-    const monthEnd = endOfMonth(this.viewDate);
-    const calStart = startOfWeek(monthStart, { weekStartsOn: 1 });
-    const calEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
-
-    const weekStarts = eachWeekOfInterval({ start: calStart, end: calEnd }, { weekStartsOn: 1 });
-
-    this.weeks = weekStarts.map(weekStart => {
-      const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+    if (this.viewMode === 'day') {
+      this.weekDays = [{
+        date: this.viewDate,
+        isCurrentMonth: true,
+        isToday: isSameDay(this.viewDate, new Date()),
+        bookings: this.getBookingsForDay(this.viewDate)
+      }];
+    } else if (this.viewMode === 'week') {
+      const weekStart = startOfWeek(this.viewDate, { weekStartsOn: 1 });
+      const weekEnd = endOfWeek(this.viewDate, { weekStartsOn: 1 });
       const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
+      this.weekDays = days.map(day => ({
+        date: day,
+        isCurrentMonth: isSameMonth(day, this.viewDate),
+        isToday: isSameDay(day, new Date()),
+        bookings: this.getBookingsForDay(day)
+      }));
+    } else {
+      const monthStart = startOfMonth(this.viewDate);
+      const monthEnd = endOfMonth(this.viewDate);
+      const calStart = startOfWeek(monthStart, { weekStartsOn: 1 });
+      const calEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
 
-      return {
-        days: days.map(day => ({
-          date: day,
-          isCurrentMonth: isSameMonth(day, this.viewDate),
-          isToday: isSameDay(day, new Date()),
-          bookings: this.getBookingsForDay(day)
-        }))
-      };
-    });
+      const weekStarts = eachWeekOfInterval({ start: calStart, end: calEnd }, { weekStartsOn: 1 });
+
+      this.weeks = weekStarts.map(weekStart => {
+        const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+        const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
+
+        return {
+          days: days.map(day => ({
+            date: day,
+            isCurrentMonth: isSameMonth(day, this.viewDate),
+            isToday: isSameDay(day, new Date()),
+            bookings: this.getBookingsForDay(day)
+          }))
+        };
+      });
+    }
   }
 
   private getBookingsForDay(date: Date): Booking[] {

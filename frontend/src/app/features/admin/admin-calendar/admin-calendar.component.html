@@ -12,13 +12,20 @@
   <div class="calendar-container" [class.with-details]="selectedBooking">
     <div class="calendar-section">
       <div class="calendar-header">
-        <button mat-icon-button (click)="previousMonth()">
+        <button mat-icon-button (click)="viewMode === 'month' ? previousMonth() : viewMode === 'week' ? previousWeek() : previousDay()">
           <mat-icon>chevron_left</mat-icon>
         </button>
         <span class="month-year">{{ getMonthYear() }}</span>
-        <button mat-icon-button (click)="nextMonth()">
+        <button mat-icon-button (click)="viewMode === 'month' ? nextMonth() : viewMode === 'week' ? nextWeek() : nextDay()">
           <mat-icon>chevron_right</mat-icon>
         </button>
+        
+        <mat-button-toggle-group [value]="viewMode" (change)="viewMode = $event.value; onViewModeChange()" class="view-mode-toggle">
+          <mat-button-toggle value="day">День</mat-button-toggle>
+          <mat-button-toggle value="week">Неделя</mat-button-toggle>
+          <mat-button-toggle value="month">Месяц</mat-button-toggle>
+        </mat-button-toggle-group>
+        
         <button mat-stroked-button (click)="loadData()">
           <mat-icon>refresh</mat-icon>
           Обновить
@@ -29,34 +36,58 @@
         <mat-spinner diameter="48"></mat-spinner>
       </div>
 
-      <div *ngIf="!loading()" class="calendar-grid">
-        <div class="weekday-header">
-          <span>Пн</span>
-          <span>Вт</span>
-          <span>Ср</span>
-          <span>Чт</span>
-          <span>Пт</span>
-          <span>Сб</span>
-          <span>Вс</span>
+      <div *ngIf="!loading()">
+        <div *ngIf="viewMode === 'month'" class="calendar-grid">
+          <div class="weekday-header">
+            <span>Пн</span>
+            <span>Вт</span>
+            <span>Ср</span>
+            <span>Чт</span>
+            <span>Пт</span>
+            <span>Сб</span>
+            <span>Вс</span>
+          </div>
+
+          <div class="calendar-weeks">
+            <div *ngFor="let week of weeks" class="calendar-week">
+              <div 
+                *ngFor="let day of week.days" 
+                class="calendar-day"
+                [class.other-month]="!day.isCurrentMonth"
+                [class.today]="day.isToday">
+                <span class="day-number">{{ day.date | date:'d' }}</span>
+                <div class="day-bookings">
+                  <div 
+                    *ngFor="let booking of day.bookings" 
+                    class="booking-chip"
+                    [style.background-color]="getEventTypeColor(booking.eventTypeId)"
+                    [title]="getEventTypeName(booking.eventTypeId) + ' - ' + formatTime(booking)"
+                    (click)="selectBooking(booking, $event)">
+                    {{ formatTime(booking) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="calendar-weeks">
-          <div *ngFor="let week of weeks" class="calendar-week">
-            <div 
-              *ngFor="let day of week.days" 
-              class="calendar-day"
-              [class.other-month]="!day.isCurrentMonth"
-              [class.today]="day.isToday">
-              <span class="day-number">{{ day.date | date:'d' }}</span>
-              <div class="day-bookings">
-                <div 
-                  *ngFor="let booking of day.bookings" 
-                  class="booking-chip"
-                  [style.background-color]="getEventTypeColor(booking.eventTypeId)"
-                  [title]="getEventTypeName(booking.eventTypeId) + ' - ' + formatTime(booking)"
-                  (click)="selectBooking(booking, $event)">
-                  {{ formatTime(booking) }}
-                </div>
+        <div *ngIf="viewMode === 'week' || viewMode === 'day'" class="day-view">
+          <div *ngFor="let day of weekDays" class="day-column" [class.today]="day.isToday">
+            <div class="day-column-header">
+              <span class="day-name">{{ day.date | date:'EEE' }}</span>
+              <span class="day-date">{{ day.date | date:'d' }}</span>
+            </div>
+            <div class="day-column-bookings">
+              <div 
+                *ngFor="let booking of day.bookings" 
+                class="booking-card"
+                [style.border-left-color]="getEventTypeColor(booking.eventTypeId)"
+                (click)="selectBooking(booking, $event)">
+                <span class="booking-time">{{ formatTime(booking) }}</span>
+                <span class="booking-type">{{ getEventTypeName(booking.eventTypeId) }}</span>
+              </div>
+              <div *ngIf="day.bookings.length === 0" class="no-bookings">
+                Нет записей
               </div>
             </div>
           </div>
