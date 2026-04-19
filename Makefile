@@ -3,6 +3,7 @@ SHELL := /bin/zsh
 MVN ?= mvn
 JAVA21_HOME := $(shell /usr/libexec/java_home -v 21 2>/dev/null)
 MVN_JAVA21 = JAVA_HOME="$(JAVA21_HOME)" PATH="$(JAVA21_HOME)/bin:$$PATH" $(MVN)
+DOCKER_API_VERSION = 1.44
 
 .PHONY: help install run-backend run-frontend run stop check-java21 docker-build docker-up docker-down docker-logs
 

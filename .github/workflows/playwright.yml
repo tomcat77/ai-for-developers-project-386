@@ -10,15 +10,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
+    
     - name: Install dependencies
       run: npm ci
+    
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    
     - name: Run Playwright tests
       run: npx playwright test
+    
+    - name: Cleanup Docker Compose
+      if: always()
+      run: docker compose down --volumes --remove-orphans
+    
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
