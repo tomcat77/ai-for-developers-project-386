@@ -25,6 +25,16 @@
         "Authorization": "Bearer {env:RENDER_API_KEY} "
       },
       "enabled": true
+    },
+    "docker": {
+      "type": "local",
+      "command": [
+        "docker",
+        "mcp",
+        "gateway",
+        "run"
+      ],
+      "enabled": true
     }
   }
 }
