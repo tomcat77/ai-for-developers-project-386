@@ -38,6 +38,6 @@ RUN chmod +x /app/start.sh
 
 RUN mkdir -p /var/tmp/nginx /var/run/nginx && chmod 755 /etc/nginx
 
-EXPOSE 8080
+EXPOSE ${PORT}
 
 CMD ["/app/start.sh"]
