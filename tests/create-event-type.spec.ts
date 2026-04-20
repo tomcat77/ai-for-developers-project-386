@@ -37,6 +37,7 @@ test.describe('Создание типа события', () => {
     await expect(page.getByLabel('Описание')).toHaveValue('Первичное собеседование с кандидатом');
     
     // Шаг 5: Заполнить поле "Длительность (минуты)"
+    await page.getByLabel('Длительность (минуты)').press('Meta+a');
     await page.getByLabel('Длительность (минуты)').fill('45');
     await expect(page.getByLabel('Длительность (минуты)')).toHaveValue('45');
     
