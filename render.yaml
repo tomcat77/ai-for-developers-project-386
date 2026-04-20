@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: calls-calendar
+    runtime: docker
+    dockerfilePath: ./render/Dockerfile
+    repo: https://github.com/tomcat77/ai-for-developers-project-386.git
+    branch: main
+    plan: free
+    envVars:
+      - key: PORT
+        value: "8080"
+    healthCheckPath: /api/actuator/health
+    buildFilter:
+      paths:
+        - backend/**
+        - frontend/**
+        - render/**
