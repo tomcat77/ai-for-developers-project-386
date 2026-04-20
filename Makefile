@@ -3,9 +3,8 @@ SHELL := /bin/zsh
 MVN ?= mvn
 JAVA21_HOME := $(shell /usr/libexec/java_home -v 21 2>/dev/null)
 MVN_JAVA21 = JAVA_HOME="$(JAVA21_HOME)" PATH="$(JAVA21_HOME)/bin:$$PATH" $(MVN)
-DOCKER_API_VERSION = 1.44
 
-.PHONY: help install run-backend run-frontend run stop check-java21 docker-build docker-up docker-down docker-logs
+.PHONY: help install run-backend run-frontend run stop check-java21 docker-build docker-up docker-down docker-logs test-e2e test-e2e-ui test-e2e-report
 
 help: ## Show available targets
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make <target>\n\nTargets:\n"} /^[a-zA-Z0-9_.-]+:.*##/ {printf "  %-14s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -42,3 +41,12 @@ docker-down: ## Stop and remove Docker Compose services
 
 docker-logs: ## View logs from Docker Compose services
 	docker compose logs -f
+
+test-e2e: ## Run Playwright E2E tests
+	npx playwright test
+
+test-e2e-ui: ## Run Playwright E2E tests with UI mode
+	npx playwright test --ui
+
+test-e2e-report: ## Show Playwright test report
+	npx playwright show-report
