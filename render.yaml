@@ -2,7 +2,7 @@ services:
   - type: web
     name: calls-calendar
     runtime: docker
-    dockerfilePath: ./render/Dockerfile
+    dockerfilePath: ./Dockerfile
     repo: https://github.com/tomcat77/ai-for-developers-project-386.git
     branch: main
     plan: free

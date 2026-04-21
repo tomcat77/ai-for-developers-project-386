@@ -30,17 +30,17 @@ stop: ## Stop local backend and frontend processes
 	pkill -f "spring-boot:run" || true
 	pkill -f "ng serve" || true
 
-docker-build: ## Build Docker images for backend and frontend
-	docker compose build
+docker-build: ## Build united Docker image for backend and frontend
+	docker build -t calls-calendar:latest .
 
-docker-up: ## Start Docker Compose services (detached)
-	docker compose up -d
+docker-start: ## Start Docker Compose services (detached)
+	docker run -d --name calls-calendar-test -p 80:80 -e PORT=80 calls-calendar:latest
 
-docker-down: ## Stop and remove Docker Compose services
-	docker compose down
+docker-stop: ## Stop and remove Docker Compose services
+	docker rm -f calls-calendar-test
 
 docker-logs: ## View logs from Docker Compose services
-	docker compose logs -f
+	docker logs -f calls-calendar-test
 
 test-e2e: ## Run Playwright E2E tests
 	npx playwright test
